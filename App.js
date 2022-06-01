@@ -12,6 +12,7 @@ import Colors from './constants/colors';
 export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [gameIsOver, setGameIsOver] = useState(true);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   const isLoadingComplete = useCachedResources();
 
@@ -22,6 +23,11 @@ export default function App() {
 
   function gameOverHandler() {
     setGameIsOver(true);
+  }
+
+  function startNewGameHandler() {
+    setUserNumber(null);
+    setGuessRounds(0);
   }
 
   if (!isLoadingComplete) {
@@ -35,7 +41,7 @@ export default function App() {
   }
 
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler} />;
   }
 
   return (
